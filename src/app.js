@@ -110,6 +110,65 @@ client.on('message', message => {
 
     }
 
+    //--- Staff punishment channel.
+    if (channelId == config.channel.staffPunishment) {
+
+      if (content.startsWith('!lookup')) {
+        if (args.length == 1) {
+          var arg0 = args[0];
+
+          pool.query('SELECT * FROM litebans_bans WHERE uuid = ? OR ip = ? OR reason = ? OR banned_by_uuid = ? OR banned_by_name = ?', [arg0], function(fields, data, error) {
+            if (error) console.log(error);
+            var sendChl = client.guilds.get(config.guild).channels.get(config.channel.staffPunishment);
+
+            if (data != null && data.length > 0) {
+              var embed = new Discord.RichEmbed()
+                            .setTitle("Lookup")
+                            .setColor("GREEN")
+                            .setTimestamp();
+
+              for (var i = 0; i < data.length; i++) {
+                var cur = data[i];
+                var length = ((cur.until - cur.time) / 1000) / 60;
+
+                embed.addField(cur.time, "Reason: " + cur.reason + " - Length: " + (cur.until == -1 ? 'Perm' : length) + " - State: " + (cur.active == 1 ? 'Banned' : 'Expired'));
+              }
+
+              sendChl.send(embed);
+            } else {
+              sendChl.send(
+                new Discord.RichEmbed()
+                  .setTitle("Error")
+                  .setDescription("Could not find any punishments for '" + arg0 + "'")
+                  .setColor("RED")
+              );
+            }
+          });
+        } else {
+          message.reply('Invalid format: !lookup <name|UUID|IP>');
+        }
+      }
+
+      if (content.startsWith('!ban')) {
+        if (args.length == 2) {
+
+        } else {
+          message.reply('Invalid format: !ban <name|UUID|IP> <reason>');
+        }
+      }
+
+      if (content.startsWith('!unban')) {
+        if (args.length == 1) {
+
+        } else {
+          message.reply('Invalid format: !unban <name|UUID|IP>');
+        }
+      }
+
+      message.delete();
+
+    }
+
     //--- Server IP.
     if (content.startsWith('!ip') || content.startsWith('!server')) {
       message.channel.send(

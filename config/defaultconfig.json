@@ -11,7 +11,8 @@
     "unban" : "",
     "report" : "",
     "staffUnban" : "",
-    "staffReport" : ""
+    "staffReport" : "",
+    "staffPunishment" : ""
   },
   "database": {
     "host" : "localhost",
