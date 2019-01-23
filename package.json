@@ -1,0 +1,17 @@
+{
+  "name": "mineskies-discord-bot",
+  "version": "1.0.0",
+  "description": "The MineSkies discord bot",
+  "main": "src/app.js",
+  "dependencies": {
+    "discord.js": "^11.4.2",
+    "mysql": "^2.16.0",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Digital",
+  "license": "ISC"
+}

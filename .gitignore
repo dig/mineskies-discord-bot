@@ -59,3 +59,5 @@ typings/
 
 # Custom configs
 config/config.json
+
+package-lock.json
