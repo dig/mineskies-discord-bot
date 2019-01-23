@@ -1,0 +1,12 @@
+{
+  "id" : "",
+  "token" : "",
+  "guild" : "",
+  "channel" : {
+    "welcome" : "",
+    "link" : "",
+    "staffAuth" : "",
+    "admin" : "",
+    "test" : ""
+  }
+}
