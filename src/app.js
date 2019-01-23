@@ -139,7 +139,7 @@ client.on('message', message => {
       message.channel.send(
         new Discord.RichEmbed()
           .setTitle("Vote Information")
-          .setDescription("Vote daily to receive **1500 coins** and **3 vote keys**.\n**Top 3 voters** at the end of the month will receive **$20 store coupons** (/votetop in-game)\n \n:one: http://bit.ly/mineskies-vote-1\n:two: http://bit.ly/mineskies-vote-2\n:three: http://bit.ly/mineskies-vote-3")
+          .setDescription("Vote daily to receive **1500 coins** and **3 vote keys**.\n**Top 3 voters** at the end of the month will receive **$20 store coupons** (/votetop in-game)\n \n:one: http://bit.ly/ms-vote-1\n:two: http://bit.ly/ms-vote-2\n:three: http://bit.ly/ms-vote-3")
           .setColor("PURPLE")
       );
 
@@ -169,6 +169,27 @@ client.on('message', message => {
 
   }
 
+  //--- Reports / Unbans.
+  if (member.id != config.id && (channelId == config.channel.unban || channelId == config.channel.report)) {
+
+    var destId = config.channel.staffUnban;
+    if (channelId == config.channel.report) {
+      destId = config.channel.staffReport;
+    }
+
+    message.reply('Form sent.');
+    client.guilds.get(config.guild).channels.get(destId).send(
+      new Discord.RichEmbed()
+        .setAuthor(member.user.tag)
+        .setTitle("Form")
+        .setDescription(content)
+        .setColor("BLUE")
+        .setTimestamp()
+    );
+    message.delete();
+
+  }
+
   //--- Delete all messages in link.
   if ((channelId == config.channel.link || channelId == config.channel.staffAuth) && member.id != config.id && !message.pinned) {
     message.delete();
@@ -189,7 +210,7 @@ setInterval(function() {
           //--- Set announced to true.
           pool.query('UPDATE staff_pending SET announced = 1 WHERE uuid = ?', [data.uuid]);
 
-          client.guilds.get(guildId).channels.get(config.channel.staffAuth).send(
+          client.guilds.get(config.guild).channels.get(config.channel.staffAuth).send(
             new Discord.RichEmbed()
               .setTitle("Security Notice")
               .setDescription("<@" + data.discord_id + "> A new IP has tried to connect to the server using your account, was this you? React with :thumbsup: or :thumbsdown:.")
