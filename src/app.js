@@ -226,6 +226,34 @@ client.on('message', message => {
       }
     }
 
+    //--- Update log.
+    if (channelId == config.channel.test) {
+      if (content.startsWith('!update')) {
+        if (args.length >= 3) {
+          var updateMessage = "";
+
+          for (var i = 2; i < args.length; i++) {
+            if (i == (updateMessage.length - 1)) {
+              updateMessage += args[i];
+            } else {
+              updateMessage += args[i] + " ";
+            }
+          }
+
+          message.guild.channels.get(config.channel.updateLog).send(
+            new Discord.RichEmbed()
+              .setTitle("Changelog - " + args[0])
+              .setDescription(updateMessage)
+              .setColor(args[1])
+              .setTimestamp()
+          );
+
+        } else {
+          message.reply('Invalid format: !update <title> <colour> <message>');
+        }
+      }
+    }
+
   }
 
   //--- Reports / Unbans.
