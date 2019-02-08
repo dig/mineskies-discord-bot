@@ -94,7 +94,11 @@ client.on('message', message => {
               //--- Give role.
               var guild = client.guilds.get(config.guild);
               var role = guild.roles.find(role => role.name === "Linked");
-              client.guilds.get(config.guild).members.get(memberId).addRole(role, 'Linking account.');
+              var member = client.guilds.get(config.guild).members.get(memberId);
+              member.addRole(role, 'Linking account.');
+
+              //--- Change username to match in-game.
+              member.setNickname(data.name);
 
             }, function() {
               message.reply('An error has occured while linking your account, please message an admin.');
